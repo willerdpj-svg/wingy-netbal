@@ -869,10 +869,19 @@ function drawHUD() {
 // ═══════════════════════════════════════
 
 function getInputPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  let cx, cy;
   if (e.touches && e.touches.length > 0) {
-    return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    cx = e.touches[0].clientX;
+    cy = e.touches[0].clientY;
+  } else if (e.changedTouches && e.changedTouches.length > 0) {
+    cx = e.changedTouches[0].clientX;
+    cy = e.changedTouches[0].clientY;
+  } else {
+    cx = e.clientX;
+    cy = e.clientY;
   }
-  return { x: e.clientX, y: e.clientY };
+  return { x: cx - rect.left, y: cy - rect.top };
 }
 
 function handleDown(e) {

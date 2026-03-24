@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#2D1B4E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Wingy Netball — A sparkly arcade netball game!">
+  <title>Wingy Netball</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- MENU SCREEN -->
+  <div id="menuScreen" class="overlay">
+    <div class="overlay-content">
+      <h1 class="game-title">Wingy Netball</h1>
+      <p class="subtitle">Shoot through the nets!</p>
+      <button class="btn btn-primary" id="btn1Player">1 Player</button>
+      <button class="btn btn-secondary" id="btn2Players">2 Players</button>
+      <button class="btn btn-mute" id="btnMuteMusic">Music: ON</button>
+    </div>
+  </div>
+
+  <!-- NAME ENTRY SCREEN -->
+  <div id="nameScreen" class="overlay hidden">
+    <div class="overlay-content">
+      <h2 class="screen-title">Enter Your Name</h2>
+      <div id="nameInputs">
+        <div class="input-group">
+          <label for="player1Name">Player 1</label>
+          <input type="text" id="player1Name" class="name-input" maxlength="12" placeholder="Your name" autocomplete="off">
+        </div>
+        <div class="input-group hidden" id="player2Group">
+          <label for="player2Name">Player 2</label>
+          <input type="text" id="player2Name" class="name-input" maxlength="12" placeholder="Your name" autocomplete="off">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="btnStartGame">Let's Go!</button>
+    </div>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="endScreen" class="overlay hidden">
+    <div class="overlay-content">
+      <h2 class="screen-title" id="endTitle">Great Job!</h2>
+      <div class="score-display">
+        <p class="big-score" id="endScore">0 / 10</p>
+        <p class="stat" id="endAccuracy">Accuracy: 0%</p>
+        <p class="stat" id="endBest">Personal Best: 0</p>
+      </div>
+      <p class="encourage-msg" id="endMessage">Keep practicing!</p>
+      <button class="btn btn-primary" id="btnPlayAgain">Play Again</button>
+      <button class="btn btn-secondary" id="btnEndMenu">Menu</button>
+    </div>
+  </div>
+
+  <!-- COMPARE SCREEN (2P) -->
+  <div id="compareScreen" class="overlay hidden">
+    <div class="overlay-content">
+      <h2 class="screen-title">Results</h2>
+      <div class="compare-container">
+        <div class="player-result" id="p1Result">
+          <p class="player-name" id="p1Name">Player 1</p>
+          <p class="player-score" id="p1Score">0 / 10</p>
+          <p class="stat" id="p1Accuracy">0%</p>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="player-result" id="p2Result">
+          <p class="player-name" id="p2Name">Player 2</p>
+          <p class="player-score" id="p2Score">0 / 10</p>
+          <p class="stat" id="p2Accuracy">0%</p>
+        </div>
+      </div>
+      <p class="encourage-msg" id="compareMessage">Well played!</p>
+      <button class="btn btn-primary" id="btnCompareAgain">Play Again</button>
+      <button class="btn btn-secondary" id="btnBackMenu">Menu</button>
+    </div>
+  </div>
+
+  <script src="sounds.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

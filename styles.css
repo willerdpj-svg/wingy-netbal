@@ -33,6 +33,7 @@ html, body {
   background: rgba(26, 0, 51, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  touch-action: auto;
 }
 
 .overlay.hidden {
@@ -86,6 +87,8 @@ html, body {
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
   min-height: 56px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn:active {

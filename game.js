@@ -938,7 +938,21 @@ canvas.addEventListener('touchend', handleUp, { passive: false });
 // BUTTON HANDLERS
 // ═══════════════════════════════════════
 
-document.getElementById('btn1Player').addEventListener('click', () => {
+// Helper: attach both click and touchend to buttons for iPad/mobile reliability
+function onTap(el, fn) {
+  let touchFired = false;
+  el.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchFired = true;
+    fn();
+  }, { passive: false });
+  el.addEventListener('click', () => {
+    if (touchFired) { touchFired = false; return; }
+    fn();
+  });
+}
+
+onTap(document.getElementById('btn1Player'), () => {
   ensureAudio();
   state.mode = 1;
   player2Group.classList.add('hidden');
@@ -947,7 +961,7 @@ document.getElementById('btn1Player').addEventListener('click', () => {
   document.getElementById('player1Name').focus();
 });
 
-document.getElementById('btn2Players').addEventListener('click', () => {
+onTap(document.getElementById('btn2Players'), () => {
   ensureAudio();
   state.mode = 2;
   player2Group.classList.remove('hidden');
@@ -957,7 +971,7 @@ document.getElementById('btn2Players').addEventListener('click', () => {
   document.getElementById('player1Name').focus();
 });
 
-document.getElementById('btnStartGame').addEventListener('click', () => {
+onTap(document.getElementById('btnStartGame'), () => {
   const name1 = document.getElementById('player1Name').value.trim() || 'Player 1';
   const name2 = document.getElementById('player2Name').value.trim() || 'Player 2';
 
@@ -968,7 +982,7 @@ document.getElementById('btnStartGame').addEventListener('click', () => {
   showScreen(null); // PLAYING
 });
 
-document.getElementById('btnPlayAgain').addEventListener('click', () => {
+onTap(document.getElementById('btnPlayAgain'), () => {
   if (state.mode === 2 && state.currentPlayer === 0) {
     // Switch to player 2
     state.currentPlayer = 1;
@@ -982,23 +996,23 @@ document.getElementById('btnPlayAgain').addEventListener('click', () => {
   }
 });
 
-document.getElementById('btnEndMenu').addEventListener('click', () => {
+onTap(document.getElementById('btnEndMenu'), () => {
   stopChickenBanana();
   showScreen(menuScreen);
 });
 
-document.getElementById('btnMuteMusic').addEventListener('click', () => {
+onTap(document.getElementById('btnMuteMusic'), () => {
   const muted = toggleMuteMusic();
   document.getElementById('btnMuteMusic').textContent = muted ? 'Music: OFF' : 'Music: ON';
 });
 
-document.getElementById('btnCompareAgain').addEventListener('click', () => {
+onTap(document.getElementById('btnCompareAgain'), () => {
   showScreen(nameScreen);
   document.getElementById('player1Name').value = state.players[0].name;
   document.getElementById('player2Name').value = state.players[1].name;
 });
 
-document.getElementById('btnBackMenu').addEventListener('click', () => {
+onTap(document.getElementById('btnBackMenu'), () => {
   stopChickenBanana();
   showScreen(menuScreen);
 });

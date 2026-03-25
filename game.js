@@ -13,6 +13,12 @@ const endScreen = document.getElementById('endScreen');
 const compareScreen = document.getElementById('compareScreen');
 const player2Group = document.getElementById('player2Group');
 
+// Stop touch events on overlays from reaching the canvas (iPad fix)
+[menuScreen, nameScreen, endScreen, compareScreen].forEach(overlay => {
+  overlay.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+  overlay.addEventListener('touchend', (e) => e.stopPropagation(), { passive: true });
+});
+
 // ── Canvas sizing ──
 let W, H, dpr;
 
@@ -559,6 +565,9 @@ function showScreen(screen) {
     screen === endScreen ? 'END_SCREEN' : 'COMPARE'
   );
 
+  // Disable canvas touch when overlay is showing (fixes iPad)
+  canvas.style.pointerEvents = state.phase === 'PLAYING' ? 'auto' : 'none';
+
   // Start/stop background music
   if (state.phase === 'PLAYING') {
     playChickenBanana();
@@ -938,15 +947,15 @@ canvas.addEventListener('touchend', handleUp, { passive: false });
 // BUTTON HANDLERS
 // ═══════════════════════════════════════
 
-// Helper: attach both click and touchend to buttons for iPad/mobile reliability
+// Helper: attach both touchstart and click to buttons for iPad/mobile reliability
 function onTap(el, fn) {
   let touchFired = false;
-  el.addEventListener('touchend', (e) => {
-    e.preventDefault();
+  el.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
     touchFired = true;
     fn();
-  }, { passive: false });
-  el.addEventListener('click', () => {
+  }, { passive: true });
+  el.addEventListener('click', (e) => {
     if (touchFired) { touchFired = false; return; }
     fn();
   });
